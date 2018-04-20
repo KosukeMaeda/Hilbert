@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String KEY = "MainActivity.order";
+
     private TextView orderView;
     private HilbertView hilbertView;
     private Button decButton, incButton;
@@ -17,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            order = savedInstanceState.getInt(KEY);
+        }
+
         orderView = findViewById(R.id.order_view);
         hilbertView = findViewById(R.id.hilbert_view);
         decButton = findViewById(R.id.dec_button);
@@ -54,5 +61,11 @@ public class MainActivity extends AppCompatActivity {
         hilbertView.setOrder(order);
         decButton.setEnabled(order > 1);
         incButton.setEnabled(order < MAX_ORDER);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY, order);
     }
 }
